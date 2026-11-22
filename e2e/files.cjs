@@ -115,6 +115,6 @@ const fs = require('fs'); const T = L.OUT;
   await step('phone (390px): landing has no sideways scroll; app opens', async () => {
     const c = await b.newContext({ viewport: { width: 390, height: 800 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }); const p = await c.newPage(); p.errors = []; p.on('pageerror', e => p.errors.push(e.message)); await p.addInitScript(() => localStorage.setItem('openplan.ui', JSON.stringify({ guide: false })));
     await p.goto('http://localhost:4173/'); await p.waitForSelector('.landing'); eq(await p.evaluate(() => { const l = document.querySelector('.landing'); return l.scrollWidth - l.clientWidth; }), 0);
-    await p.locator('.lp-nav .lp-btn').click(); await p.waitForSelector('.ribbon-tabs'); await p.waitForTimeout(500); eq(await p.evaluate(() => document.documentElement.scrollWidth), 390); await p.screenshot({ path: L.OUT + 'shots_mobile_app.png' }); eq(p.errors, []); await c.close(); });
+    await p.locator('.lp-nav .lp-btn').click(); await p.waitForSelector('.ribbon-tabs'); await p.waitForTimeout(500); for (const button of await p.locator('.sb-views button').all()) { await button.click(); eq(await p.evaluate(() => document.documentElement.scrollWidth), 390); } await p.screenshot({ path: L.OUT + 'shots_mobile_app.png' }); eq(p.errors, []); await c.close(); });
   console.log('\nSUMMARY', JSON.stringify(L.counts()), 'errors', JSON.stringify(pg.errors)); await b.close();
 })();
