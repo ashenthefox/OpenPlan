@@ -1069,3 +1069,14 @@ table.grid tr.peer .namecell::after { content: var(--peer-name); position: absol
 /* ---- editing bars on the Gantt chart ---- */
 svg .gbar.link-to .bar, svg .gbar.link-to .ms { stroke: var(--focus); stroke-width: 2.5; }
 svg .ghost-t { paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+
+/* Keep the phone status bar within the viewport without changing desktop layout. */
+@media (max-width: 480px) {
+  .statusbar { min-width: 0; padding-inline: 6px; gap: 6px; }
+  .statusbar > .sb-sep,
+  .statusbar > .save-state,
+  .statusbar > .sb-zoom { display: none; }
+  .statusbar > .spacer { min-width: 0; }
+  .sb-views { min-width: 0; }
+  .sb-views button { width: 32px; }
+}
